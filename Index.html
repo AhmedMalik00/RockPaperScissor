@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+        }
+        .finalresult{
+            font-size: 30px;
+            color: white;
+        }
+        body{
+            background-color: black;
+        }
+        .button1 , .button2 , .button3{
+            background-color: black;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            margin: 5px;
+            margin-top: 20px;
+            border: 2px solid white;
+        }
+        .button1:hover , .button2:hover , .button3:hover{
+            cursor: pointer;
+        }
+        .button1{
+            background-color: black;
+            height: 150px;
+            width: 150px;
+            background-image: url(./Rock-removebg-preview.png);
+            background-position: center;
+            background-size: cover;
+        }
+        .button2{
+            height: 150px;
+            width: 150px;
+            background: url(./Paper-removebg-preview.png);
+            background-position: center;
+            background-size: cover;
+            background-color: black;
+        }
+        .button3{
+            height: 150px;
+            width: 150px;
+            background: url(./Scissor-removebg-preview.png);
+            background-position: center;
+            background-size: cover;
+            background-color: black;
+        }
+        .scoreDisplaying img{
+            width : 60px;
+            height: 60px;
+        }
+        .reset-btn{
+            font-size: 15px;
+            background-color: black;
+            height: 45px;
+            width:  130px;
+            border-radius: 25px;
+            color: white;
+            border: 2px solid white;
+        }
+    </style></head>
+<body>
+    <button class="button1" onclick="const computermoves = computerMove(); console.log(computermoves);  PersonsMove(computermoves , 'Rock');"></button>
+    <button class="button2" onclick="computermoves = computerMove(); PersonsMove(computermoves , 'Paper');"></button>
+    <button class="button3" onclick="computermoves = computerMove();PersonsMove(computermoves , 'Scissor');"></button>
+    <p class="finalresult"></p>
+    <p class="scoreDisplaying">
+        <span class="you"></span>
+        <div class="image1"></div>
+        <p class="computer"></p>
+        <div class="image2"></div>
+    </p>
+    <p class="score"></p>
+    <button onclick="Score.Wins = 0 ;
+    Score.Losses = 0 ;
+    Score.Ties = 0 ;
+    updateScore();" class="reset-btn">Reset Game</button>
+</body>
+
+
+<script>
+    let computerChoice = '';
+    let result = '';
+    let Score = {
+        Wins : 0 ,
+        Losses : 0,
+        Ties : 0
+    }
+    updateScore();
+
+    function computerMove(){
+        let number = Math.random();
+        if(number >= 0 && number < 1/3){
+            computerChoice = 'Rock';
+        }else if(number >= 1/3 && number < 2/3){
+            computerChoice = 'Paper';
+        }else{
+            computerChoice = 'Scissor';
+        }
+        return computerChoice;
+    }
+    function PersonsMove(computerChoice , PersonMove){
+        if(PersonMove === 'Rock'){
+            if(computerChoice === 'Rock'){
+                result = 'Tie';
+            }else if(computerChoice === 'Scissor'){
+                result = 'You Win';
+            }else{
+                result = 'You Lose';
+            }
+        }else if(PersonMove === 'Scissor'){
+            if(computerChoice === 'Rock'){
+                result = 'You Lose';
+            }else if(computerChoice === 'Scissor'){
+                result = 'Tie';
+            }else{
+                result = 'You Win';
+            }
+        }else{
+            if(computerChoice === 'Rock'){
+                result = 'You Win';
+            }else if(computerChoice === 'Scissor'){
+                result = 'You Lose';
+            }else{
+                result = 'Tie';
+            }
+        }
+        if(result === 'You Win'){
+            Score.Wins++;
+        }else if(result === 'You Lose'){
+            Score.Losses++;
+        }else{
+            Score.Ties++;
+        }
+        document.querySelector('.finalresult').innerHTML =(` ${result}`);
+
+        
+        document.querySelector('.scoreDisplaying').innerHTML = `You Choose <img src = './${PersonMove}-removebg-preview.png'> Computer Choose <img src = './${computerChoice}-removebg-preview.png'>`;
+
+
+       
+        updateScore();
+
+    }    
+    function updateScore(){
+        document.querySelector(".score").innerHTML = `Wins: ${Score.Wins} Losses: ${Score.Losses} Ties: ${Score.Ties}`;
+    }
+</script>
+</html>
